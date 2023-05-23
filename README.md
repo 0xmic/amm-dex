@@ -2,6 +2,8 @@
 
 This project demonstrates a basic automated market maker based decentralized exchange.
 
+AMM utilizes a pricing formula of `X * Y = K`. For more information, refer to the [Uniswap Documentation](https://docs.uniswap.org/contracts/v2/concepts/protocol-overview/how-uniswap-works).
+
 ## Stack
 Technologies Used:
 * JavaScript
