@@ -8,7 +8,7 @@ const hre = require('hardhat')
 const config = require('../src/config.json')
 
 const tokens = (n) => {
-  return ethers.utils.parseUnits(n.toString(), 'ether')
+  return hre.ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
 const ether = tokens
@@ -17,7 +17,7 @@ const shares = ether
 async function main() {
   // Fetch accounts
   console.log(`Fetching accounts & network\n`)
-  const accounts = await ethers.getSigners()
+  const accounts = await hre.ethers.getSigners()
   const deployer = accounts[0]
   const investor1 = accounts[1]
   const investor2 = accounts[2]
@@ -25,16 +25,16 @@ async function main() {
   const investor4 = accounts[4]
 
   // Fetch Network
-  const { chainId } = await ethers.provider.getNetwork()
+  const { chainId } = await hre.ethers.provider.getNetwork()
 
   console.log(`Fetching token and transferring to accounts...\n`)
 
   // Fetch Crypto Token
-  const ct = await ethers.getContractAt('Token', config[chainId].ct.address)
+  const ct = await hre.ethers.getContractAt('Token', config[chainId].ct.address)
   console.log(`Crypto Token fetched: ${ct.address}\n`)
 
   // Fetch USD Token
-  const usd = await ethers.getContractAt('Token', config[chainId].usd.address)
+  const usd = await hre.ethers.getContractAt('Token', config[chainId].usd.address)
   console.log(`USD Token fetched: ${usd.address}\n`)
 
   ///////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ async function main() {
   console.log(`Fetching AMM...\n`)
 
   // Fetch AMM
-  const amm = await ethers.getContractAt('AMM', config[chainId].amm.address)
+  const amm = await hre.ethers.getContractAt('AMM', config[chainId].amm.address)
   console.log(`AMM fetched: ${amm.address}\n`)
 
   transaction = await ct.connect(deployer).approve(amm.address, amount)
