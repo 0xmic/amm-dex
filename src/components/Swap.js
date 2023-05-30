@@ -14,7 +14,7 @@ import Alert from './Alert'
 
 import {
   swap,
-  loadBalances
+  loadBalances,
 } from '../store/interactions'
 
 const Swap = () => {
@@ -231,8 +231,6 @@ const Swap = () => {
       ) : (
         <></>
       )}
-
-
 
     </div>
   );
