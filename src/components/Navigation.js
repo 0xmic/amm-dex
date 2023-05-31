@@ -39,7 +39,7 @@ const Navigation = () => {
         height='40'
         className='d-inline-block align-top mx-3'
       />
-      <Navbar.Brand href='#'>React Hardhat Template</Navbar.Brand>
+      <Navbar.Brand href='#'>Crypto Token AMM</Navbar.Brand>
 
       <Navbar.Toggle aria-controls="nav" />
       <Navbar.Collapse id="nav" className='justify-content-end'>
