@@ -4,11 +4,14 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import './Token.sol';
 
-// [X] Manage Pool
-// [X] Manage Deposits
-// [X] Facilitate Swaps (i.e. trades)
-// [ ] Manage Withdrawals
+/*
+ * @title AMM (Automated Market Maker)
+ * @dev This contract implements an AMM with two Token assets for liquidity providing and swapping.
+ */
 contract AMM {
+    /*
+     * @dev Public state variables
+     */
     Token public token1;
     Token public token2;
 
@@ -20,6 +23,9 @@ contract AMM {
     mapping(address => uint256) public shares;
     uint256 constant PRECISION = 10 ** 18;
 
+    /*
+     * @dev Event emitted when a token swap happens
+     */
     event Swap(
         address user,
         address tokenGive,
@@ -31,11 +37,21 @@ contract AMM {
         uint256 timestamp
     );
 
+    /*
+     * @dev The constructor function, initializes the token assets
+     * @param _token1 The first token for the AMM
+     * @param _token2 The second token for the AMM
+     */
     constructor(Token _token1, Token _token2) {
         token1 = _token1;
         token2 = _token2;
     }
 
+    /*
+     * @dev This function allows users to add liquidity to the pool
+     * @param _token1Amount Amount of the first token to add
+     * @param _token2Amount Amount of the second token to add
+     */
     function addLiquidity(uint256 _token1Amount, uint256 _token2Amount) external {
         // Deposit Tokens
         require(token1.transferFrom(msg.sender, address(this), _token1Amount), 'Failed to transfer token1');
@@ -64,7 +80,10 @@ contract AMM {
         shares[msg.sender] += share;
     }
 
-    // Determine how many token2 tokens must be deposited when depositing liquidity for token1
+    /*
+     * @dev This function calculates how much of token2 is needed to deposit for a specific amount of token1
+     * @param _token1Amount Amount of the first token for the calculation
+     */
     function calculateToken2Deposit(uint256 _token1Amount)
         public
         view
@@ -73,7 +92,10 @@ contract AMM {
         _token2Amount = (token2Balance * _token1Amount) / token1Balance;
     }
 
-    // Determine how many token1 tokens must be deposited when depositing liquidity for token2
+    /*
+     * @dev This function calculates how much of token1 is needed to deposit for a specific amount of token2
+     * @param _token2Amount Amount of the second token for the calculation
+     */
     function calculateToken1Deposit(uint256 _token2Amount)
         public
         view
@@ -82,7 +104,10 @@ contract AMM {
         _token1Amount = (token1Balance * _token2Amount) / token2Balance;
     }
 
-    // Returns amount of token2 received when swapping token1
+    /*
+     * @dev This function calculates how much of token2 is received when swapping token1
+     * @param _token1Amount Amount of the first token to swap
+     */
     function calculateToken1Swap(uint256 _token1Amount)
         public
         view
@@ -100,6 +125,10 @@ contract AMM {
         require(token2Amount < token2Balance, 'Swap cannot exceed pool balance');
     }
 
+    /*
+     * @dev This function allows users to swap token1 for token2
+     * @param _token1Amount Amount of the first token to swap
+     */
     function swapToken1(uint256 _token1Amount)
         external
         returns(uint256 token2Amount)
@@ -126,7 +155,10 @@ contract AMM {
         );
     }
 
-    // Returns amount of token1 received when swapping token2
+    /*
+     * @dev This function calculates how much of token1 is received when swapping token2
+     * @param _token2Amount Amount of the second token to swap
+     */
     function calculateToken2Swap(uint256 _token2Amount)
         public
         view
@@ -144,6 +176,10 @@ contract AMM {
         require(token1Amount < token1Balance, 'Swap cannot exceed pool balance');
     }
 
+    /*
+     * @dev This function allows users to swap token2 for token1
+     * @param _token2Amount Amount of the second token to swap
+     */
     function swapToken2(uint256 _token2Amount)
         external
         returns(uint256 token1Amount)
@@ -170,7 +206,10 @@ contract AMM {
         );
     }
 
-    // Determine how many tokens will be withdrawn
+    /*
+     * @dev This function calculates the amounts of token1 and token2 that will be withdrawn for a specific share
+     * @param _share Amount of liquidity shares to calculate the withdrawal for
+     */
     function calculateWithdrawAmount(uint256 _share)
         public
         view
@@ -181,7 +220,10 @@ contract AMM {
         token2Amount = (_share * token2Balance) / totalShares;
     }
 
-    // Removes liquidity from the pool
+    /*
+     * @dev This function allows users to remove liquidity from the pool
+     * @param _share Amount of liquidity shares to remove
+     */
     function removeLiquidity(uint256 _share)
         external
         returns(uint256 token1Amount, uint256 token2Amount)
@@ -200,5 +242,4 @@ contract AMM {
         token1.transfer(msg.sender, token1Amount);
         token2.transfer(msg.sender, token2Amount);
     }
-
 }
