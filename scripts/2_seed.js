@@ -38,7 +38,7 @@ async function main() {
   console.log(`USD Token fetched: ${usd.address}\n`)
 
   ///////////////////////////////////////////////////////////////
-  // Distribute Tokens to Investorsk
+  // Distribute Tokens to Investors
   //
 
   let transaction
