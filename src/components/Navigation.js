@@ -58,7 +58,6 @@ const Navigation = () => {
             <option value='0x13881'>Mumbai</option>
           </Form.Select>
 
-
           {account ? (
             <Navbar.Text className="d-flex align-items-center">
               {account.slice(0, 5) + '...' + account.slice(38, 42)}
