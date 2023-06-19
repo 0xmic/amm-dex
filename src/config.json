@@ -12,13 +12,24 @@
   },
   "11155111": {
     "ct": {
-      "address": ""
+      "address": "0xB84d2874B40Bb66E07031ee2EC04BC0eA35dcfF9"
     },
     "usd": {
-      "address": ""
+      "address": "0x9F8FAEf3281428BFf5f20081E08dBf8bE2483C7d"
     },
     "amm": {
-      "address": ""
+      "address": "0x1359bDB0E43C925bEEcA56a82D39615139c032e2"
+    }
+  },
+  "80001": {
+    "ct": {
+      "address": "0x5A2Bc0f1572A6F5F348Ad438fc4f959a9A174836"
+    },
+    "usd": {
+      "address": "0xce5c7407f39a28c82308467FC5D6e5B50e0447A1"
+    },
+    "amm": {
+      "address": "0x8A2869A704A2184B197649e40E322828f6c470eb"
     }
   }
 }
